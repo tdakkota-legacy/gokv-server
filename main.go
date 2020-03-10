@@ -5,7 +5,6 @@ import (
 	"github.com/tidwall/redcon"
 	"github.com/urfave/cli/v2"
 	"log"
-	"net/http"
 	_ "net/http/pprof"
 	"os"
 )
@@ -32,10 +31,6 @@ func runner(c *cli.Context) error {
 	if bind == "" {
 		bind = "localhost:5000"
 	}
-
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
 
 	log.Println("Staring server on", bind)
 	return redcon.ListenAndServe(bind, server.Handler, server.Accept, server.Closed)
